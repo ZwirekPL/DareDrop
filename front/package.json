@@ -1,5 +1,5 @@
 {
-  "name": "catering-manager",
+  "name": "daredrop-front",
   "version": "0.1.0",
   "dependencies": {
     "@auth0/auth0-react": "^2.0.0",
