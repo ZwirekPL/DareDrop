@@ -1,6 +1,6 @@
 const express = require("express");
 const Item = require("../models/item");
-const { getUserItems } = require("./messages.service");
+const { getStreamers } = require("./messages.service");
 const { validateAccessToken } = require("../middleware/auth0.middleware.js");
 
 const messagesRouter = express.Router();
@@ -56,12 +56,13 @@ messagesRouter
 // STREAMER
 messagesRouter.get("/protected/:userName", validateAccessToken, (req, res) => {
   const userName = req.params.userName;
-  const message = getUserItems(userName).then((data) => {
+  const message = getStreamers(userName).then((data) => {
     res.status(200).json(data);
   });
 });
 
 //STREAMERID??
+
 messagesRouter
   .route("/inventory/get/:userName", validateAccessToken)
   .get((req, res) => {
