@@ -1,0 +1,33 @@
+.page-footer {
+  background-color: var(--dark-aluminium);
+  color: var(--light-aluminium);
+  display: flex;
+  flex-shrink: 0;
+  /* responsive */
+  font-size: 1.6rem;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 2.4rem;
+  margin-top: 2.4rem;
+  text-align: center;
+  width: 100%;
+}
+.page-footer-paragraph {
+  margin: auto;
+  padding: 1rem;
+}
+
+@media only screen and (max-width: 960px) {
+  .page-footer {
+    /* responsive */
+    font-size: 1.4rem;
+    line-height: 2.2rem;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .page-footer {
+    /* responsive */
+    font-size: 1.4rem;
+    line-height: 2.2rem;
+  }
+}

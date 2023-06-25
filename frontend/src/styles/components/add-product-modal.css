@@ -1,0 +1,130 @@
+.wrapper {
+  align-items: flex-start;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0rem;
+  position: fixed;
+  top: 10rem;
+  width: 100%;
+  z-index: 1;
+}
+.productModal {
+  align-items: center;
+  background-color: #555;
+  border-radius: 0.8rem;
+  -webkit-box-shadow: 1px 2px 18px 5px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 1px 2px 18px 5px rgba(66, 68, 90, 1);
+  box-shadow: 1px 2px 18px 5px rgba(66, 68, 90, 1);
+  display: flex;
+  flex-direction: column;
+  width: clamp(250px, 60%, 840px);
+}
+
+.productModal__top {
+  border-bottom: 1px solid #333;
+  display: flex;
+  flex-direction: row;
+  height: 15%;
+  justify-content: space-between;
+  padding: 1rem;
+  width: 90%;
+}
+.productModal__title {
+  font-family: var(--font-secondary);
+  font-size: 2rem;
+  margin: 0;
+}
+.productModal__xbtn {
+  cursor: pointer;
+  font-family: var(--font-secondary);
+  font-size: 3rem;
+}
+.productModal__xbtn:hover {
+  color: var(--mandarine);
+}
+.table__modal tr th {
+  padding: 6px;
+}
+.productModal__form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+@keyframes error {
+  from {
+    opacity: 0;
+  }
+  to {
+    background-color: 0.8;
+  }
+}
+.error__div {
+  align-items: center;
+  animation-duration: 0.5s;
+  animation-name: error;
+  background-color: var(--mandarine);
+  border-radius: 0.6rem;
+  display: flex;
+  font-family: var(--font-secondary);
+  height: 4rem;
+  justify-content: center;
+  opacity: 0.8;
+  width: 85%;
+}
+.width-100 {
+  margin: 2rem 5%;
+  width: 90%;
+}
+.width-100:hover {
+  background: rgba(62, 55, 255, 0.85);
+}
+input[type="text"] {
+  text-transform: capitalize;
+}
+@media only screen and (max-width: 300px) {
+  .table__modal tr th {
+    padding: 1px;
+  }
+  .productModal__title {
+    font-size: 1.5rem;
+  }
+  .productModal__xbtn {
+    font-size: 2.5rem;
+  }
+  .error__div {
+    font-size: 1rem;
+  }
+  .error__div p {
+    line-height: 1rem;
+    margin: 0 0.5rem;
+  }
+}
+@media only screen and (min-width: 300px) and (max-width: 480px) {
+  .table__modal tr th {
+    padding: 1px;
+  }
+  .productModal__title {
+    font-size: 1.5rem;
+  }
+  .productModal__xbtn {
+    font-size: 2.5rem;
+  }
+  .error__div {
+    font-size: 1rem;
+  }
+  .error__div p {
+    line-height: 1rem;
+    margin: 0 0.5rem;
+  }
+}
+@media only screen and (min-width: 481px) and (max-width: 840px) {
+  .error__div {
+    font-size: 1.2rem;
+  }
+  .error__div p {
+    line-height: 1.2rem;
+    margin: 0 0.5rem;
+  }
+}

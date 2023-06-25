@@ -1,0 +1,128 @@
+.mobile-nav-bar__container {
+  background-color: var(--black);
+  box-shadow: rgb(90 95 102) 0-1.5px 0 inset;
+  display: none;
+  flex-shrink: 0;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  z-index: 300;
+}
+
+.mobile-nav-bar {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-shrink: 0;
+  /* responsive */
+  height: 6.4rem;
+  margin: 0;
+  max-width: 1200px;
+  padding: 0.8rem 1.6rem;
+}
+
+.mobile-nav-bar__brand {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  height: 100%;
+  /* responsive */
+  margin-right: 1.6rem;
+}
+
+.mobile-nav-bar__link {
+  align-items: center;
+  display: flex;
+  height: 100%;
+}
+
+.mobile-nav-bar__logo {
+  height: 2.4rem;
+}
+
+.mobile-nav-bar__menu {
+  background-color: var(--black);
+  height: calc(100% - 6.4rem);
+  left: 0;
+  position: fixed;
+  top: 6.4rem;
+  width: 100%;
+  z-index: 300;
+}
+
+.mobile-nav-bar__toggle {
+  cursor: pointer;
+  font-size: 3.6rem;
+  margin-left: 2.4rem;
+}
+
+.mobile-nav-bar__tabs {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.mobile-nav-bar__tab {
+  background-color: var(--black);
+  box-shadow: rgb(90 95 102) 0-1.5px 0 inset;
+  color: var(--white);
+  display: flex;
+  flex-direction: row;
+  font-size: 2rem;
+  /*justify-content: center;*/
+  font-weight: 500;
+  line-height: 16px;
+  padding: 3.2rem 2.4rem;
+  width: 100%;
+}
+
+.mobile-nav-bar__tab:last-child {
+  margin-right: 0;
+}
+
+.mobile-nav-bar__tab--active {
+  text-decoration-color: var(--indigo);
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  /* responsive */
+  text-decoration-thickness: 4px;
+  text-underline-offset: 8px;
+}
+
+.mobile-nav-bar__tab:hover {
+  color: var(--white);
+}
+
+.mobile-nav-bar__icon {
+  display: none;
+}
+
+.mobile-nav-bar__buttons {
+  background-color: var(--black);
+  display: flex;
+  justify-content: center;
+  padding: 3.2rem;
+}
+
+@media only screen and (max-width: 640px) and (hover: none) {
+  .mobile-nav-bar__tab:hover {
+    color: var(--white);
+  }
+
+  .mobile-nav-bar__tab--active:hover {
+    color: var(--white);
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .mobile-nav-bar__container {
+    display: flex;
+  }
+
+  .mobile-nav-bar__menu--closed {
+    display: none;
+  }
+}
