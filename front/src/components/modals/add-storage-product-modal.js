@@ -62,7 +62,7 @@ export const AddProductModal = ({ setShowAddModal, nameUser, category }) => {
 
     axios.post(`${apiServerUrl}/api/messages/create`, newstreamerName);
     setShowAddModal(false);
-    // window.location.reload();
+    window.location.reload();
 
     // console.log(newstreamerName);
   };

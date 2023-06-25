@@ -15,12 +15,10 @@ export const Table = () => {
   let currently = sessionStorage.getItem("currently");
 
   const [selectValue, setSelectValue] = useState(currently || `${user.name}`);
-  const [admin, setAdmin] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [idUpdateItem, setidUpdateItem] = useState();
   const [itemToUpdate, setitemToUpdate] = useState();
-  const [category, setCategory] = useState();
   const [filteredMessage, setFilteredMessage] = useState(null);
   const [message, setMessage] = useState([]);
   const [categoryErr, setCategoryErr] = useState(false);
@@ -65,7 +63,6 @@ export const Table = () => {
         setMessage(error);
       }
       if (user.email === "admin@test.com") {
-        setAdmin(true);
         getMessage();
       }
     };
@@ -75,51 +72,6 @@ export const Table = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAccessTokenSilently, user]);
-
-  const handleSendInventory = () => {
-    if (category) {
-      if (filteredMessage !== null) {
-        axios.post(
-          `${apiServerUrl}/api/messages/inventory/send/` + selectValue,
-          { data: filteredMessage, editUser: user.name, category: category }
-        );
-      }
-      if (filteredMessage === null) {
-        axios.post(
-          `${apiServerUrl}/api/messages/inventory/send/` + selectValue,
-          { data: message, editUser: user.name }
-        );
-      }
-      if (user.email === "admin@test.com") return null;
-      else {
-        window.location.reload();
-      }
-    } else {
-      setCategoryErr(!categoryErr);
-    }
-  };
-
-  const handleChange = (event) => {
-    setSelectValue(event.target.value);
-  };
-
-  const handleGetOtherItems = () => {
-    getMessage();
-  };
-
-  const handleRemoveItem = (index) => {
-    const idRemoveItem = message[index]._id;
-    axios.delete(`${apiServerUrl}/api/messages/delete/` + idRemoveItem);
-    window.location.reload();
-  };
-
-  const handleCategory = (string) => {
-    const afterFilter = message.filter(
-      (element) => element.category === string
-    );
-    setFilteredMessage(afterFilter);
-    setCategory(string);
-  };
 
   const renderInventory = (message, index) => {
     return (
@@ -135,12 +87,6 @@ export const Table = () => {
             >
               &#9998;<span className="controls__edit-tooltiptext">Edytuj</span>
             </div>
-            <div
-              onClick={() => handleRemoveItem(index)}
-              className="controls__trash"
-            >
-              &#10006;<span className="controls__trash-tooltiptext">Usuń</span>
-            </div>
           </div>
         </td>
       </tr>
@@ -148,11 +94,7 @@ export const Table = () => {
   };
 
   const handleshowAddModal = () => {
-    if (category) {
-      setShowAddModal(true);
-    } else {
-      setCategoryErr(!categoryErr);
-    }
+    setShowAddModal(true);
   };
 
   const handleShowUpdateModal = (index) => {
@@ -177,7 +119,6 @@ export const Table = () => {
         <AddProductModal
           nameUser={selectValue}
           setShowAddModal={setShowAddModal}
-          category={category}
         />
       )}
       {showUpdateModal && (
@@ -189,68 +130,7 @@ export const Table = () => {
         />
       )}
       <div className="table__body">
-        {admin && (
-          <div className="table__admin-wrapper">
-            <label className="admin__select-label" htmlFor="departament">
-              Wybierz placówkę:
-            </label>
-            <select
-              name="departament"
-              id="departament"
-              value={selectValue}
-              onChange={handleChange}
-              className="button admin__select"
-            >
-              <option value="user1@test.com">Użytkownik1</option>
-              <option value="user2@test.com">Użytkownik2</option>
-              <option value="user3@test.com">Użytkownik3</option>
-              <option value="user4@test.com">Użytkownik4</option>
-              <option value="user5@test.com">Użytkownik5</option>
-              <option value="user6@test.com">Użytkownik6</option>
-              <option value="user7@test.com">Użytkownik7</option>
-              <option value="user8@test.com">Użytkownik8</option>
-              <option value="user9@test.com">Użytkownik9</option>
-              <option value="user10@test.com">Użytkownik10</option>
-              <option value="user11@test.com">Użytkownik11</option>
-              <option value="user12@test.com">Użytkownik12</option>
-              <option value="user13@test.com">Użytkownik13</option>
-              <option value="user14@test.com">Użytkownik14</option>
-              <option value="user15@test.com">Użytkownik15</option>
-            </select>
-            <button
-              className="button button--primary"
-              onClick={handleGetOtherItems}
-            >
-              Pobierz
-            </button>
-          </div>
-        )}
-        {categoryErr && !category && <ErrorCategory props={"inwentaryzacji"} />}
-        <div>
-          {" "}
-          <button
-            onClick={() => handleCategory("groceries")}
-            className={`button button--primary ${
-              category === "groceries" && category
-            }`}
-          >
-            Art.spożywcze
-          </button>
-          <button
-            onClick={() => handleCategory("chemical")}
-            className={`button button--third ${
-              category === "chemical" && category
-            }`}
-          >
-            Art.Chemiczne
-          </button>
-          <button
-            className="button button--primary"
-            onClick={handleshowAddModal}
-          >
-            Dodaj nowy produkt
-          </button>
-        </div>
+        {categoryErr && <ErrorCategory props={"inwentaryzacji"} />}
         <div className="table-responsive">
           <table>
             <thead>
@@ -284,10 +164,10 @@ export const Table = () => {
                 <th></th>
                 <th>
                   <button
-                    className="button button--secondary"
-                    onClick={handleSendInventory}
+                    className="button button--primary"
+                    onClick={handleshowAddModal}
                   >
-                    Potwierdź inwentaryzację
+                    Dodaj nowy produkt
                   </button>
                 </th>
               </tr>

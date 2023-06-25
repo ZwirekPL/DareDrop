@@ -6,7 +6,7 @@ const { validateAccessToken } = require("../middleware/auth0.middleware.js");
 const messagesRouter = express.Router();
 // CREATE
 messagesRouter.route("/create", validateAccessToken).post((req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const streamerName = req.body.streamerName;
   const platform = req.body.platform;
   const description = req.body.description;
