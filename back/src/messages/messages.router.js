@@ -1,30 +1,21 @@
 const express = require("express");
-const Item = require("../models/item");
+const Streamer = require("../models/streamer");
 const { getStreamers } = require("./messages.service");
 const { validateAccessToken } = require("../middleware/auth0.middleware.js");
 
 const messagesRouter = express.Router();
 // CREATE
 messagesRouter.route("/create", validateAccessToken).post((req, res) => {
-  const userName = req.body.userName;
-  const item = req.body.item;
-  const capacity = req.body.capacity;
-  const bulkQuantity = req.body.bulkQuantity;
-  const quantityNow = req.body.quantityNow;
-  const unit = req.body.unit;
-  const editBy = req.body.editBy;
-  const category = req.body.category;
-  const newItem = new Item({
-    userName,
-    item,
-    capacity,
-    bulkQuantity,
-    quantityNow,
-    unit,
-    editBy,
-    category,
+  console.log(req.body);
+  const streamerName = req.body.streamerName;
+  const platform = req.body.platform;
+  const description = req.body.description;
+  const newStreamer = new Streamer({
+    streamerName,
+    platform,
+    description,
   });
-  newItem.save();
+  newStreamer.save();
   res.status(200);
 });
 // VOTE
@@ -41,7 +32,7 @@ messagesRouter
     const newEditBy = req.body.editBy;
     const newCategory = req.body.category;
 
-    const updateItem = await Item.findById(idUpdateItem).exec();
+    const updateItem = await Streamer.findById(idUpdateItem).exec();
     updateItem.userName = newUserName;
     updateItem.item = newItem;
     updateItem.capacity = newCapacity;
@@ -56,7 +47,7 @@ messagesRouter
 // STREAMER
 messagesRouter.get("/protected/:userName", validateAccessToken, (req, res) => {
   const userName = req.params.userName;
-  const message = getStreamers(userName).then((data) => {
+  const message = getStreamers().then((data) => {
     res.status(200).json(data);
   });
 });

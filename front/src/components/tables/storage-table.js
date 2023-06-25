@@ -124,11 +124,9 @@ export const Table = () => {
   const renderInventory = (message, index) => {
     return (
       <tr key={index}>
-        <td>{message.item}</td>
-        <td>{message.capacity}</td>
-        <td>{message.bulkQuantity}</td>
-        <td>{message.quantityNow}</td>
-        <td>{message.unit}</td>
+        <td>{message.streamerName}</td>
+        <td>{message.platform}</td>
+        <td>{message.description}</td>
         <td>
           <div className="container__controls">
             <div
@@ -257,12 +255,9 @@ export const Table = () => {
           <table>
             <thead>
               <tr>
-                <th className="table-header">Nazwa</th>
-                <th className="table-header">Pojemność</th>
-                <th className="table-header">Zbiorcze</th>
-                <th className="table-header">Ilość</th>
-                <th className="table-header">Jednostka</th>
-                <th className="table-header"></th>
+                <th className="table-header">Streamer Name</th>
+                <th className="table-header">Platform</th>
+                <th className="table-header">description</th>
               </tr>
             </thead>
             {message.length === 0 && (

@@ -1,14 +1,12 @@
-const Item = require("../models/item");
+const Streamer = require("../models/streamer");
 
-const getStreamers = (userName) => {
-  const dataFind = Item.find({
-    userName: `${userName}`,
-  }).exec();
+const getStreamers = () => {
+  const dataFind = Streamer.find({}).exec();
   return dataFind;
 };
 
-const getUserItems = (userName) => {
-  const dataFind = Item.find({
+const getUserStreamers = (userName) => {
+  const dataFind = Streamer.find({
     userName: `${userName}`,
   }).exec();
   return dataFind;
