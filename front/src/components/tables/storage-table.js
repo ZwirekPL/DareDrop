@@ -12,9 +12,8 @@ import {
 export const Table = () => {
   const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
   const { getAccessTokenSilently, user } = useAuth0();
-  let currently = sessionStorage.getItem("currently");
 
-  const [selectValue, setSelectValue] = useState(currently || `${user.name}`);
+  const [selectValue, setSelectValue] = useState(`${user.name}`);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [idUpdateItem, setidUpdateItem] = useState();
@@ -23,23 +22,11 @@ export const Table = () => {
   const [message, setMessage] = useState([]);
   const [categoryErr, setCategoryErr] = useState(false);
 
-  const currentlyGet = (data) => {
-    if (data) {
-      if (currently == null) {
-        currently = data[0].userName;
-      } else {
-        currently = selectValue;
-      }
-      sessionStorage.setItem("currently", currently);
-    }
-  };
-
   const getMessage = async () => {
     const accessToken = await getAccessTokenSilently();
     const { data, error } = await getOtherUserItems(accessToken, selectValue);
     if (data) {
       setMessage(data);
-      currentlyGet(data);
       setFilteredMessage(null);
     }
     if (error) {
@@ -57,7 +44,6 @@ export const Table = () => {
       }
       if (data) {
         setMessage(data);
-        currentlyGet(data);
       }
       if (error) {
         setMessage(error);
@@ -125,8 +111,8 @@ export const Table = () => {
         <UpdateProductModal
           setShowUpdateModal={setShowUpdateModal}
           nameUser={selectValue}
-          idUpdateItem={idUpdateItem}
-          itemToUpdate={itemToUpdate}
+          updateStreamerId={idUpdateItem}
+          streamerToUpdate={itemToUpdate}
         />
       )}
       <div className="table__body">

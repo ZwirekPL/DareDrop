@@ -22,29 +22,19 @@ messagesRouter.route("/create", validateAccessToken).post((req, res) => {
 messagesRouter
   .route("/update/:idUpdateItem", validateAccessToken)
   .post(async (req, res) => {
+    console.log(req.body);
     const idUpdateItem = req.params.idUpdateItem;
-    const newUserName = req.body.userName;
-    const newItem = req.body.item;
-    const newCapacity = req.body.capacity;
-    const newBulkQuantity = req.body.bulkQuantity;
-    const newQuantityNow = req.body.quantityNow;
-    const newUnit = req.body.unit;
-    const newEditBy = req.body.editBy;
-    const newCategory = req.body.category;
-
+    const newstreamerName = req.body.streamerName;
+    const newplatform = req.body.platform;
+    const newdescription = req.body.description;
     const updateItem = await Streamer.findById(idUpdateItem).exec();
-    updateItem.userName = newUserName;
-    updateItem.item = newItem;
-    updateItem.capacity = newCapacity;
-    updateItem.bulkQuantity = newBulkQuantity;
-    updateItem.quantityNow = newQuantityNow;
-    updateItem.unit = newUnit;
-    updateItem.editBy = newEditBy;
-    updateItem.category = newCategory;
+    updateItem.streamerName = newstreamerName;
+    updateItem.platform = newplatform;
+    updateItem.description = newdescription;
     const updatedItem = await updateItem.save();
     res.status(200);
   });
-// STREAMER
+// STREAMER LIST
 messagesRouter.get("/protected/:userName", validateAccessToken, (req, res) => {
   const userName = req.params.userName;
   const message = getStreamers().then((data) => {
@@ -52,7 +42,7 @@ messagesRouter.get("/protected/:userName", validateAccessToken, (req, res) => {
   });
 });
 
-//STREAMERID??
+//STREAMER??
 
 messagesRouter
   .route("/inventory/get/:userName", validateAccessToken)

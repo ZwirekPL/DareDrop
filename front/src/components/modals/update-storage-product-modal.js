@@ -5,8 +5,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 export const UpdateProductModal = ({
   setShowUpdateModal,
   nameUser,
-  idUpdateItem,
-  itemToUpdate,
+  updateStreamerId,
+  streamerToUpdate,
 }) => {
   const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
   const { user } = useAuth0();
@@ -15,13 +15,9 @@ export const UpdateProductModal = ({
   const [errorMessage, setErrorMessage] = useState("");
   const [input, setInput] = useState({
     userName: nameUser,
-    item: itemToUpdate.item,
-    capacity: itemToUpdate.capacity,
-    bulkQuantity: itemToUpdate.bulkQuantity,
-    quantityNow: itemToUpdate.quantityNow,
-    unit: itemToUpdate.unit,
-    editBy: user.name,
-    category: itemToUpdate.category,
+    streamerName: streamerToUpdate.streamerName,
+    platform: streamerToUpdate.platform,
+    description: streamerToUpdate.description,
   });
 
   const handleOnChange = (event) => {
@@ -34,73 +30,46 @@ export const UpdateProductModal = ({
     });
   };
   // ERRORS
-  const itemNull = () => {
+  const streamerNameNull = () => {
     setErrorIsVisible(true);
     setErrorMessage("Pole Nazwa jest wymagane. Proszę je uzupełnić.");
   };
-  const capacityNull = () => {
+  const platformNull = () => {
     setErrorIsVisible(true);
     setErrorMessage("Pole Pojemność jest wymagane. Proszę je uzupełnić.");
   };
-  const bulkQuantityNull = () => {
+  const descriptionNull = () => {
     setErrorIsVisible(true);
     setErrorMessage(
       "Pole Opakowanie zbiorcze jest wymagane. Proszę je uzupełnić."
     );
-  };
-  const quantityNowNull = () => {
-    setErrorIsVisible(true);
-    setErrorMessage(
-      "Pole Nowa ilość na stanie jest wymagane. Proszę je uzupełnić."
-    );
-  };
-  const unitNull = () => {
-    setErrorIsVisible(true);
-    setErrorMessage("Pole Jednostka jest wymagane. Proszę je uzupełnić.");
-  };
-  const categoryNull = () => {
-    setErrorIsVisible(true);
-    setErrorMessage("Pole kategoria jest wymagane. Proszę je uzupełnić.");
   };
   //.
   const handleCloseUpdateModal = () => setShowUpdateModal(false);
   const handleClick = (event) => {
     event.preventDefault();
     console.log(user.name);
-    const updateItem = {
+    const updateStreamer = {
       userName: nameUser,
-      item: input.item,
-      capacity: input.capacity,
-      bulkQuantity: input.bulkQuantity,
-      quantityNow: input.quantityNow,
-      unit: input.unit,
-      editBy: user.name,
-      category: input.category,
+      streamerName: input.streamerName,
+      platform: input.platform,
+      description: input.description,
     };
     if (!nameUser) {
       return null;
     }
-    if (!input.category) {
-      return categoryNull();
+    if (!input.streamerName) {
+      return streamerNameNull();
     }
-    if (!input.item) {
-      return itemNull();
+    if (!input.platform) {
+      return platformNull();
     }
-    if (!input.capacity) {
-      return capacityNull();
-    }
-    if (!input.bulkQuantity) {
-      return bulkQuantityNull();
-    }
-    if (!input.quantityNow) {
-      return quantityNowNull();
-    }
-    if (!input.unit) {
-      return unitNull();
+    if (!input.description) {
+      return descriptionNull();
     }
     axios.post(
-      `${apiServerUrl}/api/messages/update/` + idUpdateItem,
-      updateItem
+      `${apiServerUrl}/api/messages/update/` + updateStreamerId,
+      updateStreamer
     );
     setShowUpdateModal(false);
     window.location.reload();
@@ -111,7 +80,7 @@ export const UpdateProductModal = ({
       <div className="productModal">
         <div className="productModal__top">
           <p className="productModal__title">
-            Edytujesz: <strong>{itemToUpdate.item}</strong>
+            Edytujesz: <strong>{streamerToUpdate.streamerName}</strong>
           </p>
           <div className="productModal__xbtn" onClick={handleCloseUpdateModal}>
             &#10006;
@@ -127,90 +96,36 @@ export const UpdateProductModal = ({
           <div className="table-responsive">
             <table className="table__modal">
               <tr>
-                <th>
-                  <input
-                    type="radio"
-                    name="category"
-                    id="groceries"
-                    value="groceries"
-                    onChange={handleOnChange}
-                    defaultChecked={input.category === "groceries"}
-                  />
-                  <label htmlFor="groceries" class="option option-1">
-                    <div class="dot"></div>
-                    <span>Art.spożywcze</span>
-                  </label>
-                </th>
-                <th>
-                  <input
-                    type="radio"
-                    name="category"
-                    id="chemical"
-                    value="chemical"
-                    onChange={handleOnChange}
-                    defaultChecked={input.category === "chemical"}
-                  />
-                  <label htmlFor="chemical" class="option option-2">
-                    <div class="dot"></div>
-                    <span>Art.chemiczne</span>
-                  </label>
-                </th>
-              </tr>
-              <tr>
-                <th>Nazwa</th>
+                <th>Streamer Name</th>
                 <th>
                   <input
                     onChange={handleOnChange}
-                    name="item"
-                    value={input.item}
+                    name="streamerName"
+                    value={input.streamerName}
                     type="text"
                     form="update__storage-form"
                   />
                 </th>
               </tr>
               <tr>
-                <th>Pojemność</th>
+                <th>Platform</th>
                 <th>
                   <input
                     onChange={handleOnChange}
-                    name="capacity"
-                    value={input.capacity}
+                    name="platform"
+                    value={input.platform}
                     type="text"
                     form="update__storage-form"
                   />
                 </th>
               </tr>
               <tr>
-                <th>Opakowanie zbiorcze</th>
+                <th>description</th>
                 <th>
                   <input
                     onChange={handleOnChange}
-                    name="bulkQuantity"
-                    value={input.bulkQuantity}
-                    type="number"
-                    form="update__storage-form"
-                  />
-                </th>
-              </tr>
-              <tr>
-                <th>Nowa ilość na stanie</th>
-                <th>
-                  <input
-                    onChange={handleOnChange}
-                    name="quantityNow"
-                    value={input.quantityNow}
-                    type="number"
-                    form="update__storage-form"
-                  />
-                </th>
-              </tr>
-              <tr>
-                <th>Jednostka</th>
-                <th>
-                  <input
-                    onChange={handleOnChange}
-                    name="unit"
-                    value={input.unit}
+                    name="description"
+                    value={input.description}
                     type="text"
                     form="update__storage-form"
                   />

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export const AddProductModal = ({ setShowAddModal, nameUser, category }) => {
+export const AddProductModal = ({ setShowAddModal, nameUser }) => {
   const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
   const [errorIsVisible, setErrorIsVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
