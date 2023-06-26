@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export const AddProductModal = ({ setShowAddModal, nameUser }) => {
+export const AddProductModal = () => {
   const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
   const [errorIsVisible, setErrorIsVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [input, setInput] = useState({
-    userName: nameUser,
     streamerName: "",
     platform: "",
     description: "",
@@ -37,18 +36,14 @@ export const AddProductModal = ({ setShowAddModal, nameUser }) => {
     setErrorMessage("Pole jednostka jest wymagane. Proszę je uzupełnić.");
   };
   //.
-  const handleCloseLoginModal = () => setShowAddModal(false);
+
   const handleClick = (event) => {
     event.preventDefault();
     const newstreamerName = {
-      userName: nameUser,
       streamerName: input.streamerName,
       platform: input.platform,
       description: input.description,
     };
-    if (!nameUser) {
-      return null;
-    }
     if (!input.streamerName) {
       return streamerNameNull();
     }
@@ -61,7 +56,6 @@ export const AddProductModal = ({ setShowAddModal, nameUser }) => {
     }
 
     axios.post(`${apiServerUrl}/api/messages/create`, newstreamerName);
-    setShowAddModal(false);
     window.location.reload();
 
     // console.log(newstreamerName);
@@ -71,10 +65,7 @@ export const AddProductModal = ({ setShowAddModal, nameUser }) => {
     <div className="wrapper">
       <div className="productModal">
         <div className="productModal__top">
-          <p className="productModal__title">Dodaj nowy produkt</p>
-          <div className="productModal__xbtn" onClick={handleCloseLoginModal}>
-            &#10006;
-          </div>
+          <p className="productModal__title">Add Streamer to ranking </p>
         </div>
         <div className="productModal__form">
           {errorIsVisible ? (

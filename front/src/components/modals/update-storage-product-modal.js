@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useAuth0 } from "@auth0/auth0-react";
 
 export const UpdateProductModal = ({
   setShowUpdateModal,
@@ -9,7 +8,6 @@ export const UpdateProductModal = ({
   streamerToUpdate,
 }) => {
   const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
-  const { user } = useAuth0();
 
   const [errorIsVisible, setErrorIsVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -48,7 +46,6 @@ export const UpdateProductModal = ({
   const handleCloseUpdateModal = () => setShowUpdateModal(false);
   const handleClick = (event) => {
     event.preventDefault();
-    console.log(user.name);
     const updateStreamer = {
       userName: nameUser,
       streamerName: input.streamerName,

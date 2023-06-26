@@ -1,44 +1,22 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { ErrorCategory } from "../layout/error-category";
-import { AddProductModal } from "../modals/add-storage-product-modal";
+import { AddProductModal } from "../form/streamer-submission-form";
 import { UpdateProductModal } from "../modals/update-storage-product-modal";
-import {
-  getUserItems,
-  getOtherUserItems,
-} from "../../services/message.service";
+import { getUserItems } from "../../services/message.service";
 
-export const Table = () => {
-  const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
-  const { getAccessTokenSilently, user } = useAuth0();
-
-  const [selectValue, setSelectValue] = useState(`${user.name}`);
+export const StreamersTable = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+
   const [idUpdateItem, setidUpdateItem] = useState();
   const [itemToUpdate, setitemToUpdate] = useState();
+
   const [filteredMessage, setFilteredMessage] = useState(null);
   const [message, setMessage] = useState([]);
-  const [categoryErr, setCategoryErr] = useState(false);
-
-  const getMessage = async () => {
-    const accessToken = await getAccessTokenSilently();
-    const { data, error } = await getOtherUserItems(accessToken, selectValue);
-    if (data) {
-      setMessage(data);
-      setFilteredMessage(null);
-    }
-    if (error) {
-      setMessage(error);
-    }
-  };
 
   useEffect(() => {
     let isMounted = true;
     const getUserInv = async () => {
-      const accessToken = await getAccessTokenSilently();
-      const { data, error } = await getUserItems(accessToken, user);
+      const { data, error } = await getUserItems();
       if (!isMounted) {
         return;
       }
@@ -48,16 +26,13 @@ export const Table = () => {
       if (error) {
         setMessage(error);
       }
-      if (user.email === "admin@test.com") {
-        getMessage();
-      }
     };
     getUserInv();
     return () => {
       isMounted = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getAccessTokenSilently, user]);
+  }, []);
 
   const renderInventory = (message, index) => {
     return (
@@ -101,22 +76,15 @@ export const Table = () => {
 
   return (
     <>
-      {showAddModal && (
-        <AddProductModal
-          nameUser={selectValue}
-          setShowAddModal={setShowAddModal}
-        />
-      )}
+      {showAddModal && <AddProductModal setShowAddModal={setShowAddModal} />}
       {showUpdateModal && (
         <UpdateProductModal
           setShowUpdateModal={setShowUpdateModal}
-          nameUser={selectValue}
           updateStreamerId={idUpdateItem}
           streamerToUpdate={itemToUpdate}
         />
       )}
-      <div className="table__body">
-        {categoryErr && <ErrorCategory props={"inwentaryzacji"} />}
+      <div className="streamersTable-body">
         <div className="table-responsive">
           <table>
             <thead>
@@ -124,13 +92,17 @@ export const Table = () => {
                 <th className="table-header">Streamer Name</th>
                 <th className="table-header">Platform</th>
                 <th className="table-header">description</th>
+                <th className="table-header"></th>
               </tr>
             </thead>
             {message.length === 0 && (
               <tbody>
                 <tr>
                   <td colSpan="6">
-                    <p className="storage__error">Nie znaleziono artykułów.</p>
+                    <p className="storage__error">
+                      The list is empty or a database error has occurred. Please
+                      try again later or add a streamer.
+                    </p>
                   </td>
                 </tr>
               </tbody>
@@ -143,8 +115,6 @@ export const Table = () => {
             )}
             <tfoot>
               <tr>
-                <th></th>
-                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
