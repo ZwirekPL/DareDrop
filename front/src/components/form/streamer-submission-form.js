@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { createNewStreamer } from "../../services/message.service";
 
 export const StreamerSubmissionForm = () => {
-  const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
   const [errorIsVisible, setErrorIsVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [input, setInput] = useState({
@@ -39,7 +38,7 @@ export const StreamerSubmissionForm = () => {
 
   const handleClick = (event) => {
     event.preventDefault();
-    const newstreamerName = {
+    const newStreamerData = {
       streamerName: input.streamerName,
       platform: input.platform,
       description: input.description,
@@ -54,11 +53,8 @@ export const StreamerSubmissionForm = () => {
     if (!input.description) {
       return descriptionNull();
     }
-
-    axios.post(`${apiServerUrl}/api/messages/create`, newstreamerName);
+    createNewStreamer(newStreamerData);
     window.location.reload();
-
-    // console.log(newstreamerName);
   };
 
   return (
