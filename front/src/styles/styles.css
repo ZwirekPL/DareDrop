@@ -2,5 +2,6 @@
 @import "general.css";
 @import "./main-page.css";
 @import "./components/layouts/page-layout.css";
+@import "./components/layouts/page-loader.css";
 @import "./components/streamers-list.css";
 @import "./components/streamer-submission-form.css";

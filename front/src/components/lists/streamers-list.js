@@ -1,52 +1,65 @@
 import React, { useEffect, useState } from "react";
-import { AddProductModal } from "../form/streamer-submission-form";
-import { UpdateProductModal } from "../modals/update-storage-product-modal";
-import { getUserItems } from "../../services/message.service";
+import { getStreamerList, putVoteToDB } from "../../services/message.service";
+import { PageLoader } from "../layout/page-loader";
 
 export const StreamersTable = () => {
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-
-  const [idUpdateItem, setidUpdateItem] = useState();
-  const [itemToUpdate, setitemToUpdate] = useState();
-
-  const [filteredMessage, setFilteredMessage] = useState(null);
   const [message, setMessage] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
     const getUserInv = async () => {
-      const { data, error } = await getUserItems();
-      if (!isMounted) {
-        return;
-      }
+      setLoader(true);
+      const { data, error } = await getStreamerList();
       if (data) {
         setMessage(data);
+        setLoader(false);
       }
       if (error) {
         setMessage(error);
       }
     };
     getUserInv();
-    return () => {
-      isMounted = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleUpVote = (index) => {
+    const idStreamerToUpVote = message[index]._id;
+    const updateStreamerVotesCount = {
+      voteCount: 1,
+    };
+    putVoteToDB(idStreamerToUpVote, updateStreamerVotesCount);
+    window.location.reload();
+  };
+
+  const handleDownVote = (index) => {
+    const idStreamerToUpVote = message[index]._id;
+    const updateStreamerVotesCount = {
+      voteCount: -1,
+    };
+    putVoteToDB(idStreamerToUpVote, updateStreamerVotesCount);
+    window.location.reload();
+  };
 
   const renderInventory = (message, index) => {
     return (
       <tr key={index}>
         <td>{message.streamerName}</td>
         <td>{message.platform}</td>
-        <td>{message.description}</td>
+        <td>{message.voteCount}</td>
+        <td>
+          <div className="container__controls">
+            <div className="controls__edit" onClick={() => handleUpVote(index)}>
+              &#43;<span className="controls__edit-tooltiptext">Up votes</span>
+            </div>
+          </div>
+        </td>
         <td>
           <div className="container__controls">
             <div
               className="controls__edit"
-              onClick={() => handleShowUpdateModal(index)}
+              onClick={() => handleDownVote(index)}
             >
-              &#9998;<span className="controls__edit-tooltiptext">Edytuj</span>
+              &#8722;
+              <span className="controls__edit-tooltiptext">Down votes</span>
             </div>
           </div>
         </td>
@@ -54,82 +67,38 @@ export const StreamersTable = () => {
     );
   };
 
-  const handleshowAddModal = () => {
-    setShowAddModal(true);
-  };
-
-  const handleShowUpdateModal = (index) => {
-    if (filteredMessage) {
-      const idRemoveItem = filteredMessage[index]._id;
-      const itemToUpdate = filteredMessage[index];
-      setidUpdateItem(idRemoveItem);
-      setitemToUpdate(itemToUpdate);
-      setShowUpdateModal(true);
-    } else {
-      const idRemoveItem = message[index]._id;
-      const itemToUpdate = message[index];
-      setidUpdateItem(idRemoveItem);
-      setitemToUpdate(itemToUpdate);
-      setShowUpdateModal(true);
-    }
-  };
-
   return (
     <>
-      {showAddModal && <AddProductModal setShowAddModal={setShowAddModal} />}
-      {showUpdateModal && (
-        <UpdateProductModal
-          setShowUpdateModal={setShowUpdateModal}
-          updateStreamerId={idUpdateItem}
-          streamerToUpdate={itemToUpdate}
-        />
-      )}
       <div className="streamersTable-body">
         <div className="table-responsive">
-          <table>
-            <thead>
-              <tr>
-                <th className="table-header">Streamer Name</th>
-                <th className="table-header">Platform</th>
-                <th className="table-header">description</th>
-                <th className="table-header"></th>
-              </tr>
-            </thead>
-            {message.length === 0 && (
-              <tbody>
+          {!loader && (
+            <table>
+              <thead>
                 <tr>
-                  <td colSpan="6">
-                    <p className="storage__error">
-                      The list is empty or a database error has occurred. Please
-                      try again later or add a streamer.
-                    </p>
-                  </td>
+                  <th className="table-header">Streamer Name</th>
+                  <th className="table-header">Platform</th>
+                  <th className="table-header">Votes</th>
+                  <th className="table-header">Up Vote</th>
+                  <th className="table-header">Down Vote</th>
                 </tr>
-              </tbody>
-            )}
-            {filteredMessage === null && (
+              </thead>
+              {!loader && message.length === 0 && (
+                <tbody>
+                  <tr>
+                    <td colSpan="6">
+                      <p className="storage__error">
+                        The list is empty or a database error has occurred.
+                        Please try again later or add a streamer.
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              )}
               <tbody>{message.map(renderInventory)}</tbody>
-            )}
-            {filteredMessage && (
-              <tbody>{filteredMessage.map(renderInventory)}</tbody>
-            )}
-            <tfoot>
-              <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>
-                  <button
-                    className="button button--primary"
-                    onClick={handleshowAddModal}
-                  >
-                    Dodaj nowy produkt
-                  </button>
-                </th>
-              </tr>
-            </tfoot>
-          </table>
+            </table>
+          )}
         </div>
+        {loader && <PageLoader />}
       </div>
     </>
   );

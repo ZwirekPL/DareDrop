@@ -9,25 +9,23 @@ messagesRouter.route("/create").post((req, res) => {
   const streamerName = req.body.streamerName;
   const platform = req.body.platform;
   const description = req.body.description;
+  const voteCount = 0;
   const newStreamer = new Streamer({
     streamerName,
     platform,
     description,
+    voteCount,
   });
   newStreamer.save();
   res.status(200);
 });
 // VOTE
-messagesRouter.route("/update/:idUpdateItem").post(async (req, res) => {
+messagesRouter.route("/update/:idUpdateItem").put(async (req, res) => {
   // console.log(req.body);
   const idUpdateItem = req.params.idUpdateItem;
-  const newstreamerName = req.body.streamerName;
-  const newplatform = req.body.platform;
-  const newdescription = req.body.description;
+  const newVote = req.body.voteCount;
   const updateItem = await Streamer.findById(idUpdateItem).exec();
-  updateItem.streamerName = newstreamerName;
-  updateItem.platform = newplatform;
-  updateItem.description = newdescription;
+  updateItem.voteCount = updateItem.voteCount + newVote;
   const updatedItem = await updateItem.save();
   res.status(200);
 });

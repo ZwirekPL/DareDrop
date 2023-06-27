@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export const AddProductModal = () => {
+export const StreamerSubmissionForm = () => {
   const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
   const [errorIsVisible, setErrorIsVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
