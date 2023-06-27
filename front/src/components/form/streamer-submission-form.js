@@ -12,11 +12,10 @@ export const StreamerSubmissionForm = () => {
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
-    const toLowerCase = value.toLowerCase();
     setInput((prevInput) => {
       return {
         ...prevInput,
-        [name]: toLowerCase,
+        [name]: value,
       };
     });
   };
@@ -43,6 +42,7 @@ export const StreamerSubmissionForm = () => {
       platform: input.platform,
       description: input.description,
     };
+    console.log(newStreamerData);
     if (!input.streamerName) {
       return streamerNameNull();
     }
@@ -84,7 +84,7 @@ export const StreamerSubmissionForm = () => {
                 />
               </th>
             </tr>
-            <tr>
+            {/* <tr>
               <th>Platform</th>
               <th>
                 <input
@@ -94,6 +94,25 @@ export const StreamerSubmissionForm = () => {
                   type="text"
                   form="add__storage-form"
                 />
+              </th>
+            </tr> */}
+            <tr>
+              <th>
+                <label for="platform">Choose platform:</label>
+              </th>
+              <th>
+                <select
+                  id="platform"
+                  name="platform"
+                  form="add__storage-form"
+                  onChange={handleOnChange}
+                >
+                  <option value="Twitch">Twitch</option>
+                  <option value="YouTube">YouTube</option>
+                  <option value="TikTok">TikTok</option>
+                  <option value="Kick">Kick</option>
+                  <option value="Rumble">Rumble</option>
+                </select>
               </th>
             </tr>
             <tr>

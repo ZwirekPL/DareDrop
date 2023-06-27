@@ -20,7 +20,7 @@ export const StreamersTable = () => {
     };
     getUserInv();
   }, []);
-
+  const goToStreamerSite = (index) => {};
   const handleUpVote = (index) => {
     const idStreamerToUpVote = message[index]._id;
     const updateStreamerVotesCount = {
@@ -41,14 +41,14 @@ export const StreamersTable = () => {
 
   const renderInventory = (message, index) => {
     return (
-      <tr key={index}>
+      <tr key={index} onClick={goToStreamerSite(index)}>
         <td>{message.streamerName}</td>
         <td>{message.platform}</td>
         <td>{message.voteCount}</td>
         <td>
           <div className="container__controls">
             <div className="controls__edit" onClick={() => handleUpVote(index)}>
-              &#43;<span className="controls__edit-tooltiptext">Up votes</span>
+              &#43;<span className="controls__edit-tooltiptext">Up vote</span>
             </div>
           </div>
         </td>
@@ -59,7 +59,7 @@ export const StreamersTable = () => {
               onClick={() => handleDownVote(index)}
             >
               &#8722;
-              <span className="controls__edit-tooltiptext">Down votes</span>
+              <span className="controls__edit-tooltiptext">Down vote</span>
             </div>
           </div>
         </td>
