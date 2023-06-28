@@ -2,38 +2,49 @@ import React, { useState } from "react";
 import { createNewStreamer } from "../../services/message.service";
 
 export const StreamerSubmissionForm = () => {
-  const [errorIsVisible, setErrorIsVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const [input, setInput] = useState({
     streamerName: "",
     platform: "",
     description: "",
   });
 
+  const [errors, setErrors] = useState({
+    streamerNameError: "",
+    platformError: "",
+    descriptionError: "",
+  });
+
+  const [validFields, setValidFields] = useState({
+    streamerName: false,
+    platform: false,
+    description: false,
+  });
+
   const handleOnChange = (event) => {
     const { name, value } = event.target;
-    setInput((prevInput) => {
-      return {
-        ...prevInput,
-        [name]: value,
-      };
-    });
+    setInput((prevInput) => ({
+      ...prevInput,
+      [name]: value,
+    }));
+
+    setValidFields((prevValidFields) => ({
+      ...prevValidFields,
+      [name]: validateField(name, value),
+    }));
   };
 
-  // ERRORS
-  const streamerNameNull = () => {
-    setErrorIsVisible(true);
-    setErrorMessage("Pole nazwa jest wymagane. Proszę je uzupełnić.");
+  const validateField = (name, value) => {
+    switch (name) {
+      case "streamerName":
+        return value.length >= 3;
+      case "platform":
+        return value !== "";
+      case "description":
+        return value.length >= 10 && value.length <= 200;
+      default:
+        return true;
+    }
   };
-  const platformNull = () => {
-    setErrorIsVisible(true);
-    setErrorMessage("Pole pojemność jest wymagane. Proszę je uzupełnić.");
-  };
-  const descriptionNull = () => {
-    setErrorIsVisible(true);
-    setErrorMessage("Pole jednostka jest wymagane. Proszę je uzupełnić.");
-  };
-  //.
 
   const handleClick = (event) => {
     event.preventDefault();
@@ -42,101 +53,111 @@ export const StreamerSubmissionForm = () => {
       platform: input.platform,
       description: input.description,
     };
-    console.log(newStreamerData);
-    if (!input.streamerName) {
-      return streamerNameNull();
-    }
-    if (!input.platform) {
-      return platformNull();
+
+    let formIsValid = true;
+    const updatedErrors = {
+      streamerNameError: "",
+      platformError: "",
+      descriptionError: "",
+    };
+
+    if (!validFields.streamerName) {
+      formIsValid = false;
+      updatedErrors.streamerNameError =
+        "The streamer name field is required and must have minimum 3 characters. Please fill in this field.";
     }
 
-    if (!input.description) {
-      return descriptionNull();
+    if (!validFields.platform) {
+      formIsValid = false;
+      updatedErrors.platformError =
+        "The platform field is required. Please select an option.";
     }
-    createNewStreamer(newStreamerData);
-    window.location.reload();
+
+    if (!validFields.description) {
+      formIsValid = false;
+      updatedErrors.descriptionError =
+        "The description field must be between 10 and 200 characters.";
+    }
+
+    setErrors(updatedErrors);
+
+    if (formIsValid) {
+      createNewStreamer(newStreamerData);
+      window.location.reload();
+    }
   };
 
   return (
-    <div className="wrapper">
-      <div className="productModal">
-        <div className="productModal__top">
-          <p className="productModal__title">Add Streamer to ranking </p>
-        </div>
-        <div className="productModal__form">
-          {errorIsVisible ? (
-            <div className="error__div">
-              <p>{errorMessage}</p>
-            </div>
-          ) : null}
-          <form id="add__storage-form"></form>
-          <table className="table__modal">
-            <tr>
-              <th>Streamer Name</th>
-              <th>
-                <input
-                  autoFocus
-                  onChange={handleOnChange}
-                  name="streamerName"
-                  value={input.streamerName}
-                  type="text"
-                  form="add__storage-form"
-                />
-              </th>
-            </tr>
-            {/* <tr>
-              <th>Platform</th>
-              <th>
-                <input
-                  onChange={handleOnChange}
-                  name="platform"
-                  value={input.platform}
-                  type="text"
-                  form="add__storage-form"
-                />
-              </th>
-            </tr> */}
-            <tr>
-              <th>
-                <label for="platform">Choose platform:</label>
-              </th>
-              <th>
-                <select
-                  id="platform"
-                  name="platform"
-                  form="add__storage-form"
-                  onChange={handleOnChange}
-                >
-                  <option value="Twitch">Twitch</option>
-                  <option value="YouTube">YouTube</option>
-                  <option value="TikTok">TikTok</option>
-                  <option value="Kick">Kick</option>
-                  <option value="Rumble">Rumble</option>
-                </select>
-              </th>
-            </tr>
-            <tr>
-              <th>Description</th>
-              <th>
-                <input
-                  onChange={handleOnChange}
-                  name="description"
-                  value={input.description}
-                  type="text"
-                  form="add__storage-form"
-                />
-              </th>
-            </tr>
-          </table>
-          <button
-            className="button button--primary width-100"
-            onClick={handleClick}
-            form="add__storage-form"
-          >
-            Dodaj
-          </button>
-        </div>
+    <div className="form-wrapper">
+      <div className="form-title">
+        <h3>Add Streamer to List</h3>
       </div>
+      <form id="add-streamer-form">
+        <label>
+          Streamer Name:
+          <input
+            onChange={handleOnChange}
+            name="streamerName"
+            value={input.streamerName}
+            type="text"
+            form="add-streamer-form"
+            className={`${errors.streamerNameError ? "error-input" : ""} ${
+              validFields.streamerName ? "valid-input" : ""
+            }`}
+          />
+          {validFields.streamerName && (
+            <span className="checkmark">&#10004;</span>
+          )}
+        </label>
+        <div className="error">
+          {errors.streamerNameError && <p>{errors.streamerNameError}</p>}
+        </div>
+        <label>
+          Choose Platform:
+          <select
+            id="platform"
+            name="platform"
+            form="add-streamer-form"
+            onChange={handleOnChange}
+            className={`${errors.platformError ? "error-input" : ""} ${
+              validFields.platform ? "valid-input" : ""
+            }`}
+          >
+            <option value="">Select</option>
+            <option value="Twitch">Twitch</option>
+            <option value="YouTube">YouTube</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Kick">Kick</option>
+            <option value="Rumble">Rumble</option>
+          </select>
+          {validFields.platform && <span className="checkmark">&#10004;</span>}
+        </label>
+        <div className="error">
+          {errors.platformError && <p>{errors.platformError}</p>}
+        </div>
+        <label>
+          Description:
+          <textarea
+            onChange={handleOnChange}
+            name="description"
+            value={input.description}
+            rows="4"
+            form="add-streamer-form"
+            className={`${errors.descriptionError ? "error-input" : ""} ${
+              validFields.description ? "valid-input" : ""
+            }`}
+          />
+          {validFields.description && (
+            <span className="checkmark">&#10004;</span>
+          )}
+        </label>
+        <div className="error">
+          {errors.descriptionError && <p>{errors.descriptionError}</p>}
+        </div>
+      </form>
+      <button className="button" onClick={handleClick} form="add-streamer-form">
+        Send
+      </button>
     </div>
   );
 };

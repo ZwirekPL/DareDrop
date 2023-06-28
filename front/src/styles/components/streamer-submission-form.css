@@ -1,51 +1,50 @@
-.wrapper {
+.form-wrapper {
   display: flex;
   height: 100%;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
   margin: 2%;
   padding: 0 1%;
   background-color: var(--primary-background);
   border-radius: var(--border-radius);
 }
-.productModal {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+
+.form-title {
+  text-align: center;
 }
 
-.productModal__top {
-  border-bottom: 1px solid var(--body-background);
+form {
   display: flex;
-  flex-direction: row;
-  height: 14%;
-  justify-content: space-between;
-  padding: 1%;
-  width: 90%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 80%;
+  margin: 5% 0;
 }
-.productModal__title {
-  font-family: var(--font-primary);
-  font-size: 2rem;
-}
-.table__modal tr th {
-  padding: 2%;
-}
+
+label,
 input,
-select {
-  width: 60%;
+select,
+textarea {
+  position: relative;
+  width: 100%;
   border-radius: var(--border-radius);
   border: none;
   padding: 1%;
-  background-color: var(--third-background);
+  font-weight: 700;
+  font-size: 1.4rem;
   color: var(--font-color);
 }
-.productModal__form {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+
+input,
+select,
+textarea {
+  background-color: var(--third-background);
+  font-weight: 400;
 }
+
 @keyframes error {
   from {
     opacity: 0;
@@ -54,24 +53,61 @@ select {
     background-color: 0.8;
   }
 }
-.error__div {
+
+.error {
   align-items: center;
   animation-duration: 0.5s;
   animation-name: error;
-  /* background-color: var(--mandarine); */
+  background-color: var(--error-color);
   border-radius: var(--border-radius);
   display: flex;
-  height: 10%;
   justify-content: center;
   opacity: 0.8;
-  width: 85%;
+  width: 100%;
 }
-.width-100 {
-  margin: 2rem 5%;
-  width: 90%;
+
+.error p {
+  font-size: 1.3rem;
+  color: var(--body-background);
+  font-weight: 700;
+  margin: 0;
+  padding: 2% 0;
+  text-align: center;
+}
+
+.error-input {
+  border: 1px solid var(--error-color);
+}
+
+.valid-input {
+  border: 1px solid var(--valid-color);
+}
+
+.checkmark {
+  position: absolute;
+  top: 60%;
+  right: -10px;
+  transform: translateY(-50%);
+  display: inline-block;
+  color: var(--valid-color);
+  font-weight: bold;
+}
+
+.button {
+  padding: 1%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background-color: var(--body-background);
+  color: var(--scrollbar-color);
+  width: 50%;
   border-radius: var(--border-radius);
-}
-.width-100:hover {
-  background: var(--scrollbar-color);
+  border: none;
+  box-shadow: 6px 6px 24px 0px var(--body-background);
   cursor: pointer;
+}
+
+.button:hover {
+  background: var(--scrollbar-color);
+  color: var(--body-background);
+  box-shadow: 6px 6px 24px 0px var(--scrollbar-color);
 }

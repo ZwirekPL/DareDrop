@@ -16,6 +16,8 @@
   --scrollbar-color-active: #b77b06;
   --scrollbar-track: #dfe9eb;
   --scrollbar-track-hover: #b8c0c2;
+  --error-color: red;
+  --valid-color: green;
 
   --border-radius: 3px;
 
