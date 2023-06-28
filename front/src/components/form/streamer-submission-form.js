@@ -90,7 +90,7 @@ export const StreamerSubmissionForm = () => {
   return (
     <div className="form-wrapper">
       <div className="form-title">
-        <h3>Add Streamer to List</h3>
+        <h4>Add Streamer to List</h4>
       </div>
       <form id="add-streamer-form">
         <label>

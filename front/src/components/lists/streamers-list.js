@@ -44,22 +44,22 @@ export const StreamersTable = () => {
       <tr key={index} onClick={goToStreamerSite(index)}>
         <td>{message.streamerName}</td>
         <td>{message.platform}</td>
-        <td>{message.voteCount}</td>
         <td>
           <div className="container__controls">
-            <div className="controls__edit" onClick={() => handleUpVote(index)}>
-              &#43;<span className="controls__edit-tooltiptext">Up vote</span>
+            <div className="controls__up" onClick={() => handleUpVote(index)}>
+              &#8679;<span className="controls__up-tooltiptext">Up vote</span>
             </div>
           </div>
         </td>
+        <td>{message.voteCount}</td>
         <td>
           <div className="container__controls">
             <div
-              className="controls__edit"
+              className="controls__down"
               onClick={() => handleDownVote(index)}
             >
-              &#8722;
-              <span className="controls__edit-tooltiptext">Down vote</span>
+              &#8681;
+              <span className="controls__down-tooltiptext">Down vote</span>
             </div>
           </div>
         </td>
@@ -77,9 +77,9 @@ export const StreamersTable = () => {
                 <tr>
                   <th className="table-header">Streamer Name</th>
                   <th className="table-header">Platform</th>
-                  <th className="table-header">Votes</th>
-                  <th className="table-header">Up Vote</th>
-                  <th className="table-header">Down Vote</th>
+                  <th className="table-header" colSpan={3}>
+                    Votes
+                  </th>
                 </tr>
               </thead>
               {!loader && message.length === 0 && (

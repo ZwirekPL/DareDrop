@@ -13,7 +13,7 @@
 }
 .table-responsive {
   margin-top: 1%;
-  overflow-x: auto;
+  overflow-x: hidden;
   width: 100%;
 }
 table {
@@ -35,9 +35,6 @@ th {
   padding: 0.1%;
   text-align: center;
 }
-/* tr {
-  height: 10px;
-} */
 tr:nth-child(even) {
   background-color: var(--body-background);
 }
@@ -53,14 +50,15 @@ tr:first-child:hover {
   flex-direction: row;
   justify-content: space-around;
 }
-.controls__edit {
+.controls__up {
   cursor: pointer;
   display: inline-block;
   font-size: 2.5rem;
   font-weight: bold;
   position: relative;
 }
-.controls__edit .controls__edit-tooltiptext {
+.controls__up .controls__up-tooltiptext,
+.controls__down .controls__down-tooltiptext {
   background-color: var(--body-background);
   border-radius: 0.6em;
   color: var(--font-color);
@@ -74,9 +72,26 @@ tr:first-child:hover {
   width: 300%;
   z-index: 1;
 }
-.controls__edit:hover .controls__edit-tooltiptext {
+.controls__up:hover .controls__up-tooltiptext {
   visibility: visible;
 }
-.controls__edit:hover {
-  color: var(--scrollbar-color);
+.controls__up:hover {
+  color: var(--valid-color);
+}
+.controls__down {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 2.5rem;
+  font-weight: bold;
+  position: relative;
+}
+.controls__down .controls__down-tooltiptext {
+  right: 0;
+  top: -100%;
+}
+.controls__down:hover .controls__down-tooltiptext {
+  visibility: visible;
+}
+.controls__down:hover {
+  color: var(--error-color);
 }
