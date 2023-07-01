@@ -1,7 +1,9 @@
 @import "theme.css";
 @import "general.css";
-@import "./main-page.css";
-@import "./components/layouts/page-layout.css";
-@import "./components/layouts/page-loader.css";
-@import "./components/streamers-list.css";
-@import "./components/streamer-submission-form.css";
+@import "./mainPage.css";
+@import "./streamerPage.css";
+@import "./components/layouts/pageLayout.css";
+@import "./components/layouts/pageLoader.css";
+@import "./components/streamersList.css";
+@import "./components/streamerSubmissionForm.css";
+@import "./components/button.css";

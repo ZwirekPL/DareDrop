@@ -1,0 +1,38 @@
+.wrapperStreamerPage {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  justify-content: space-around;
+  margin: 0 8%;
+  align-items: flex-end;
+}
+.streamerPageBody {
+  width: 100%;
+  max-width: 1200px;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.avatarCol {
+  width: 40%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin: 0 1%;
+}
+.avatarCol img {
+  width: 100%;
+  min-width: 115px;
+  max-width: 190px;
+  border-radius: 50%;
+}
+.streamerInfo h2,
+.streamerInfo h4,
+.streamerInfo h6 {
+  margin: 0;
+}
+.streamerInfo h3,
+.streamerInfo h5 {
+  margin: 0 0 1rem 0;
+}

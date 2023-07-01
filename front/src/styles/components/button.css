@@ -1,0 +1,33 @@
+.button {
+  padding: 1%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background-color: var(--body-background);
+  color: var(--scrollbar-color);
+  width: 50%;
+  border-radius: var(--border-radius);
+  border: none;
+  box-shadow: 6px 6px 24px 0px var(--body-background);
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--scrollbar-color);
+  color: var(--body-background);
+  box-shadow: 6px 6px 24px 0px var(--scrollbar-color);
+}
+#listButton {
+  width: 100%;
+  margin: 0 3%;
+  white-space: nowrap;
+}
+#back {
+  width: 20%;
+  background-color: var(--primary-background);
+  box-shadow: 6px 6px 24px 0px var(--primary-background);
+  text-align: center;
+}
+#back:hover {
+  width: 20%;
+  background: var(--scrollbar-color);
+}

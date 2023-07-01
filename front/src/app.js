@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { MainPage } from "./pages/main-page";
+import { MainPage } from "./pages/mainPage";
 import { StreamerPage } from "./pages/streamerPage";
 
 export const App = () => {

@@ -66,27 +66,17 @@ body {
 
 h1,
 h2,
-h3,
 h4,
-h5,
 h6 {
   color: var(--font-color);
   font-family: var(--font-primary);
   font-weight: 700;
 }
-
-h1,
-h2,
-h3 {
-  margin-bottom: 1.6rem;
-  margin-top: 3.2rem;
-}
-
-h4,
-h5,
-h6 {
-  margin-bottom: 1.6rem;
-  margin-top: 1.6rem;
+h3,
+h5 {
+  color: var(--font-color);
+  font-family: var(--font-primary);
+  font-weight: 400;
 }
 
 h1 {
@@ -116,6 +106,7 @@ h6 {
 p {
   margin: 0 0 1.6rem;
   font-weight: 400;
+  font-size: 1.4rem;
 }
 
 strong {

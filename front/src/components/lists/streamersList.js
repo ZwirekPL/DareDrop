@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getStreamerList, putVoteToDB } from "../../services/message.service";
-import { PageLoader } from "../layout/page-loader";
+import {
+  getStreamerList,
+  putVoteToDB,
+} from "../../services/streamerList.service";
+import { PageLoader } from "../layout/pageLoader";
+import { Link } from "react-router-dom";
 
 export const StreamersTable = () => {
-  const [message, setMessage] = useState([]);
+  const [streamerList, setStreamerList] = useState([]);
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
@@ -11,18 +15,18 @@ export const StreamersTable = () => {
       setLoader(true);
       const { data, error } = await getStreamerList();
       if (data) {
-        setMessage(data);
+        setStreamerList(data);
         setLoader(false);
       }
       if (error) {
-        setMessage(error);
+        setStreamerList(error);
       }
     };
     getUserInv();
   }, []);
-  const goToStreamerSite = (index) => {};
+
   const handleUpVote = (index) => {
-    const idStreamerToUpVote = message[index]._id;
+    const idStreamerToUpVote = streamerList[index]._id;
     const updateStreamerVotesCount = {
       voteCount: 1,
     };
@@ -31,7 +35,7 @@ export const StreamersTable = () => {
   };
 
   const handleDownVote = (index) => {
-    const idStreamerToUpVote = message[index]._id;
+    const idStreamerToUpVote = streamerList[index]._id;
     const updateStreamerVotesCount = {
       voteCount: -1,
     };
@@ -39,11 +43,11 @@ export const StreamersTable = () => {
     window.location.reload();
   };
 
-  const renderInventory = (message, index) => {
+  const renderInventory = (streamerList, index) => {
     return (
-      <tr key={index} onClick={goToStreamerSite(index)}>
-        <td>{message.streamerName}</td>
-        <td>{message.platform}</td>
+      <tr key={index}>
+        <td>{streamerList.streamerName}</td>
+        <td>{streamerList.platform}</td>
         <td>
           <div className="container__controls">
             <div className="controls__up" onClick={() => handleUpVote(index)}>
@@ -51,7 +55,7 @@ export const StreamersTable = () => {
             </div>
           </div>
         </td>
-        <td>{message.voteCount}</td>
+        <td>{streamerList.voteCount}</td>
         <td>
           <div className="container__controls">
             <div
@@ -63,30 +67,40 @@ export const StreamersTable = () => {
             </div>
           </div>
         </td>
+        <td>
+          <Link
+            id="listButton"
+            className="button"
+            to="/streamer"
+            state={{ streamerList: streamerList }}
+          >
+            Go To Streamer Site
+          </Link>
+        </td>
       </tr>
     );
   };
 
   return (
     <>
-      <div className="streamersTable-body">
-        <div className="table-responsive">
+      <div className="streamersTableBody">
+        <div className="tableResponsive">
           {!loader && (
             <table>
               <thead>
                 <tr>
-                  <th className="table-header">Streamer Name</th>
-                  <th className="table-header">Platform</th>
-                  <th className="table-header" colSpan={3}>
+                  <th className="tableHeader">Streamer Name</th>
+                  <th className="tableHeader">Platform</th>
+                  <th className="tableHeader" colSpan={3}>
                     Votes
                   </th>
                 </tr>
               </thead>
-              {!loader && message.length === 0 && (
+              {!loader && streamerList.length === 0 && (
                 <tbody>
                   <tr>
                     <td colSpan="6">
-                      <p className="storage__error">
+                      <p className="tableError">
                         The list is empty or a database error has occurred.
                         Please try again later or add a streamer.
                       </p>
@@ -94,7 +108,7 @@ export const StreamersTable = () => {
                   </tr>
                 </tbody>
               )}
-              <tbody>{message.map(renderInventory)}</tbody>
+              <tbody>{streamerList.map(renderInventory)}</tbody>
             </table>
           )}
         </div>

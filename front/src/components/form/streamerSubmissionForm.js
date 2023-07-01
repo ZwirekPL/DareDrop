@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createNewStreamer } from "../../services/message.service";
+import { createNewStreamer } from "../../services/streamerList.service";
 
 export const StreamerSubmissionForm = () => {
   const [input, setInput] = useState({
@@ -88,8 +88,8 @@ export const StreamerSubmissionForm = () => {
   };
 
   return (
-    <div className="form-wrapper">
-      <div className="form-title">
+    <div className="wrapperForm">
+      <div className="formTittle">
         <h4>Add Streamer to List</h4>
       </div>
       <form id="add-streamer-form">
@@ -109,7 +109,7 @@ export const StreamerSubmissionForm = () => {
             <span className="checkmark">&#10004;</span>
           )}
         </label>
-        <div className="error">
+        <div className="formError">
           {errors.streamerNameError && <p>{errors.streamerNameError}</p>}
         </div>
         <label>
@@ -123,7 +123,7 @@ export const StreamerSubmissionForm = () => {
               validFields.platform ? "valid-input" : ""
             }`}
           >
-            <option value="">Select</option>
+            <option value="">Select Platform</option>
             <option value="Twitch">Twitch</option>
             <option value="YouTube">YouTube</option>
             <option value="TikTok">TikTok</option>
@@ -132,7 +132,7 @@ export const StreamerSubmissionForm = () => {
           </select>
           {validFields.platform && <span className="checkmark">&#10004;</span>}
         </label>
-        <div className="error">
+        <div className="formError">
           {errors.platformError && <p>{errors.platformError}</p>}
         </div>
         <label>
@@ -151,7 +151,7 @@ export const StreamerSubmissionForm = () => {
             <span className="checkmark">&#10004;</span>
           )}
         </label>
-        <div className="error">
+        <div className="formError">
           {errors.descriptionError && <p>{errors.descriptionError}</p>}
         </div>
       </form>

@@ -1,5 +1,6 @@
-.streamersTable-body {
+.streamersTableBody {
   width: 100%;
+  min-width: 420px;
   height: 100%;
   background-color: var(--primary-background);
   border-radius: var(--border-radius);
@@ -11,7 +12,7 @@
   overflow: hidden;
   padding: 0 1%;
 }
-.table-responsive {
+.tableResponsive {
   margin-top: 1%;
   overflow-x: hidden;
   width: 100%;
@@ -21,11 +22,11 @@ table {
   font-size: 1.4rem;
   width: 100%;
 }
-.table-header {
+.tableHeader {
   padding: 5% 0;
   border-bottom: solid var(--body-background) 1px;
 }
-.storage__error {
+.tableError {
   font-size: 2rem;
   margin: 1%;
   text-align: center;
@@ -37,10 +38,6 @@ th {
 }
 tr:nth-child(even) {
   background-color: var(--body-background);
-}
-tr:hover {
-  background-color: var(--secondary-background);
-  cursor: pointer;
 }
 tr:first-child:hover {
   background-color: var(--secondary-background);
