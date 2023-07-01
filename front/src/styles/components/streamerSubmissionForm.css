@@ -93,3 +93,18 @@ textarea {
   color: var(--valid-color);
   font-weight: bold;
 }
+@media (min-width: 200px) and (max-width: 690px) {
+  .wrapperForm {
+    display: flex;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+    min-width: 200px;
+    margin: 2%;
+    padding: 0 1%;
+    background-color: var(--primary-background);
+    border-radius: var(--border-radius);
+  }
+}

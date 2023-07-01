@@ -6,9 +6,10 @@ import {
 import { PageLoader } from "../layout/pageLoader";
 import { Link } from "react-router-dom";
 
-export const StreamersTable = () => {
+export const StreamersList = () => {
   const [streamerList, setStreamerList] = useState([]);
   const [loader, setLoader] = useState(false);
+  const [error, setError] = useState();
 
   useEffect(() => {
     const getUserInv = async () => {
@@ -19,7 +20,9 @@ export const StreamersTable = () => {
         setLoader(false);
       }
       if (error) {
-        setStreamerList(error);
+        setError(error);
+        setLoader(false);
+        console.log(error);
       }
     };
     getUserInv();
@@ -96,7 +99,7 @@ export const StreamersTable = () => {
                   </th>
                 </tr>
               </thead>
-              {!loader && streamerList.length === 0 && (
+              {!loader && streamerList.length === 0 && !error && (
                 <tbody>
                   <tr>
                     <td colSpan="6">
@@ -108,7 +111,16 @@ export const StreamersTable = () => {
                   </tr>
                 </tbody>
               )}
-              <tbody>{streamerList.map(renderInventory)}</tbody>
+              {error && (
+                <tbody>
+                  <tr>
+                    <td colSpan="6">
+                      <p className="tableError">{error.message}</p>
+                    </td>
+                  </tr>
+                </tbody>
+              )}
+              <tbody>{streamerList && streamerList.map(renderInventory)}</tbody>
             </table>
           )}
         </div>

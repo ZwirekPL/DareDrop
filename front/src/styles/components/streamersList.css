@@ -92,3 +92,19 @@ tr:first-child:hover {
 .controls__down:hover {
   color: var(--error-color);
 }
+@media (min-width: 200px) and (max-width: 690px) {
+  .streamersTableBody {
+    width: 90%;
+    min-width: 200px;
+    height: 100%;
+    background-color: var(--primary-background);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2%;
+    overflow: hidden;
+    padding: 0 1%;
+  }
+}
