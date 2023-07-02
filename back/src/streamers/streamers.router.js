@@ -1,6 +1,6 @@
 const express = require("express");
 const Streamer = require("../models/streamer");
-const { getStreamers } = require("./messages.service");
+const { getStreamers } = require("./streamers.service");
 
 const apiRouter = express.Router();
 // CREATE

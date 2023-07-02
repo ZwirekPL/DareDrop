@@ -1,7 +1,7 @@
 import { callExternalApi } from "./external-api.service";
 
 const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
-// CREATE
+
 export const createNewStreamer = async (newStreamerData) => {
   const config = {
     url: `${apiServerUrl}/streamers`,
@@ -19,7 +19,7 @@ export const createNewStreamer = async (newStreamerData) => {
     error,
   };
 };
-// STREAMER LIST
+
 export const getStreamerList = async () => {
   const config = {
     url: `${apiServerUrl}/streamers`,
@@ -34,7 +34,7 @@ export const getStreamerList = async () => {
     error,
   };
 };
-// VOTE
+
 export const putVoteToDB = async (
   idStreamerToUpVote,
   updateStreamerVotesCount
@@ -55,11 +55,10 @@ export const putVoteToDB = async (
     error,
   };
 };
-//STREAMER??
-export const getInventoryHistory = async (user) => {
-  const userName = user;
+
+export const getStreamerData = async (streamerId) => {
   const config = {
-    url: `${apiServerUrl}/inventory/get/` + userName,
+    url: `${apiServerUrl}/streamers/${streamerId}`,
     method: "GET",
     headers: {
       "content-type": "application/json",

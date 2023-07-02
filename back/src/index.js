@@ -2,8 +2,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const express = require("express");
 const mongoose = require("mongoose");
-const { apiRouter } = require("./messages/messages.router");
-const { notFoundHandler } = require("./middleware/not-found.middleware");
+const { apiRouter } = require("./streamers/streamers.router");
 
 dotenv.config();
 
@@ -39,8 +38,6 @@ app.use(
 );
 
 app.use("/", apiRouter);
-
-app.use(notFoundHandler);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

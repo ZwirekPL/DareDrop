@@ -22,7 +22,6 @@ export const StreamersList = () => {
       if (error) {
         setError(error);
         setLoader(false);
-        console.log(error);
       }
     };
     getUserInv();
@@ -75,7 +74,7 @@ export const StreamersList = () => {
             id="listButton"
             className="button"
             to="/streamer"
-            state={{ streamerList: streamerList }}
+            state={{ streamerId: streamerList._id }}
           >
             Go To Streamer Site
           </Link>
