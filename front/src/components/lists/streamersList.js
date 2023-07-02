@@ -102,7 +102,7 @@ export const StreamersList = () => {
               {!loader && streamerList.length === 0 && !error && (
                 <tbody>
                   <tr>
-                    <td colSpan="6">
+                    <td colSpan={6}>
                       <p className="tableError">
                         The list is empty or a database error has occurred.
                         Please try again later or add a streamer.
@@ -114,7 +114,7 @@ export const StreamersList = () => {
               {error && (
                 <tbody>
                   <tr>
-                    <td colSpan="6">
+                    <td colSpan={6}>
                       <p className="tableError">{error.message}</p>
                     </td>
                   </tr>
