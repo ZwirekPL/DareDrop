@@ -25,7 +25,7 @@ export const StreamerPage = () => {
       }
     };
     getUserInv();
-  }, []);
+  }, [streamerId]);
   return (
     <PageLayout>
       <div className="wrapperStreamerPage">
